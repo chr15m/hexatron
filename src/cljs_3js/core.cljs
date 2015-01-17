@@ -1,4 +1,4 @@
-(ns figwheel-test.core
+(ns cljs-3js.core
   (:require
     [figwheel.client :as fw]
     [cljs.core.async :refer [put! chan <! >! alts! timeout close!]]

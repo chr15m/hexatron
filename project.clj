@@ -1,6 +1,6 @@
 (defproject figwheel-test "0.1.0-SNAPSHOT"
-  :description "FIXME: write this!"
-  :url "http://example.com/FIXME"
+  :description "Playing with Clojurescript and Three.js with figwheel in between"
+  :url "https://github.com/chr15m/clojurescript-threejs-playground"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
@@ -20,13 +20,13 @@
   :cljsbuild {
     :builds [{:id "dev"
               :source-paths ["src"]
-              :compiler {:output-to "resources/public/js/compiled/figwheel_test.js"
+              :compiler {:output-to "resources/public/js/compiled/cljs-3js.js"
                          :output-dir "resources/public/js/compiled/out"
                          :optimizations :none
                          :source-map true}}
              {:id "min"
               :source-paths ["src"]
-              :compiler {:output-to "www/figwheel_test.min.js"
+              :compiler {:output-to "www/cljs-3js.min.js"
                          :optimizations :advanced
                          :pretty-print false
                          :preamble ["react/react.min.js"]
