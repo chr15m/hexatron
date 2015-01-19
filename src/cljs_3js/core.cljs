@@ -10,6 +10,28 @@
 ;; define your app data so that it doesn't get over-written on reload
 ;; (defonce app-data (atom {}))
 
+(def otherthing {
+                 :setup (fn [] (println "Otherthing setup"))
+                 })
+
+(def thing {
+            :setup (fn [] (println "Thing setup"))
+            :update (fn [] (println "Thing update"))  
+            :teardown (fn [] (println "Thing teardown"))  
+            })
+
+; (def game-state (atom (:entities [thing])))
+(def game-state {:entities [thing otherthing]})
+
+
+;(defn setup-system [state]
+;  (map #(when (satisfies? Moveable %) (c/move % state)) 
+;        (:entities state)))
+
+; (println game-state)
+
+; ((:setup thing))
+
 (defn next-frame []
   (let [c (chan)]
     (js/requestAnimationFrame (fn [] (put! c (.getTime (new js/Date)))))
@@ -17,8 +39,10 @@
 
 (defn update-cube [cube t]
     ;(set! (.-x (.-rotation cube)) (.sin js/Math (/ t 1000)))
-    ;(set! (.-y (.-rotation cube)) (.sin js/Math (/ t 800)))
-    (set! (.-y (.-position cube)) (* 0.2 (.sin js/Math (/ t 140))))
+    (set! (.-y (.-rotation cube)) (.sin js/Math (/ t 807)))
+    ;(set! (.-y (.-rotation cube)) 0)
+    (set! (.-y (.-position cube)) (* 0.2 (.sin js/Math (/ t 143))))
+    ;(set! (.-x (.-position cube)) (* 0.2 (.sin js/Math (/ t 140))))
   )
 
 (defn create-cube [scene] 
@@ -59,6 +83,8 @@
 ; (defonce renderer (js/THREE.CanvasRenderer.))
 (defonce scene (js/THREE.Scene.))
 (defonce camera (js/THREE.PerspectiveCamera. 75 (/ width height) 0.1 1000))
+(.position.set camera 3 3 3)
+(.lookAt camera (.-position scene))
 (defonce setup-stuff (do 
     (println "Setting up scene, renderer, camera.")
     (.setSize renderer width height)
@@ -69,16 +95,26 @@
     )
 )
 
+(defn run-game-state-fn [n] 
+  ; run through every entity in game-state
+  ; filter out entities which don't have the key we are looking for
+  ; those that do, run the key
+  (doseq [e (filter
+              (fn [e] (n e))
+              (:entities game-state))
+          
+          ] ((n e)))
+  )
 
-
-
-
+; whenever setup happens run the 
 (defn setup []
   (println "(setup)")
+  (run-game-state-fn :setup)
   )
 
 (defn teardown []
   (println "(teardown)")
+  (run-game-state-fn :teardown)
   )
 
 (fw/start {
