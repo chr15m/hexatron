@@ -1,18 +1,13 @@
 (ns nesia
-  (:require
-    [cljs.reader :as edn]
-    )
-  )
+  (:require [cljs.reader :as edn]))
 
-(defn remember! [itemName values] (
-  .setItem js/window.localStorage (pr-str itemName) (pr-str values)))
+(defn remember! [item-name values]
+  (.setItem js/window.localStorage (pr-str item-name) (pr-str values)))
 
-(defn recall! [itemName]
-  (let [
-    result (.getItem js/window.localStorage (pr-str itemName))
-    ]
-    (if (nil? result) nil (edn/read-string result))))
+(defn recall [item-name]
+  (if-let [result (.getItem js/window.localStorage (pr-str item-name))]
+    (edn/read-string result)))
 
-(defn forget! [itemName]
-  .removeItem js/window.localStorage (pr-str itemName))
+(defn forget! [item-name]
+  (.removeItem js/window.localStorage (pr-str item-name)))
 

@@ -12,18 +12,22 @@
 
 (enable-console-print!)
 
-; (nesia/remember! "my-data" {:one ["small" "array" "of" "joy"] :other "Yes quite good" :extra 42})
+(nesia/remember! "my-data" {:one ["small" "array" "of" "joy"] :other "Yes quite good" :extra 42})
 
-; (println "extra:" (:extra (nesia/recall! "my-data")))
-; (println "other:" (:other (nesia/recall! "my-data")))
-; (println "one:" (:one (nesia/recall! "my-data")))
-; (println "nah:" (:nah (nesia/recall! "my-data")))
+(println "extra:" (:extra (nesia/recall "my-data")))
+(println "other:" (:other (nesia/recall "my-data")))
+(println "one:" (:one (nesia/recall "my-data")))
+(println "nah:" (:nah (nesia/recall "my-data")))
 
-; (println "non-existent key:" (nesia/recall! "poopstick"))
+(println "non-existent key:" (nesia/recall "poopstick"))
 
-; (nesia/remember! {:cats "great"} {:ok 1 :cool 3})
+(nesia/remember! {:cats "great"} {:ok 1 :cool 3})
 
-; (println "cat's, great:" (nesia/recall! {:cats "great"}))
+(println "cat's, great:" (nesia/recall {:cats "great"}))
+
+(nesia/forget! {:cats "great"})
+	
+(println "cat's, great:" (nesia/recall {:cats "great"}))
 
 ;; define your app data so that it doesn't get over-written on reload
 ;; (defonce app-data (atom {}))
