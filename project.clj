@@ -6,7 +6,6 @@
 
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [org.clojure/clojurescript "0.0-2411"]
-                 [com.facebook/react "0.11.2"]
                  [figwheel "0.1.7-SNAPSHOT"]
                  [org.clojure/core.async "0.1.346.0-17112a-alpha"]
                  [sablono "0.2.22"]
@@ -20,17 +19,17 @@
   :cljsbuild {
     :builds [{:id "dev"
               :source-paths ["src"]
-              :compiler {:output-to "resources/public/js/compiled/cljs-3js.js"
+              :compiler {:output-to "resources/public/js/compiled/hexatron.js"
                          :output-dir "resources/public/js/compiled/out"
                          :optimizations :none
                          :source-map true}}
              {:id "min"
               :source-paths ["src"]
-              :compiler {:output-to "www/cljs-3js.min.js"
+              :compiler {:output-to "www/hexatron.min.js"
                          :optimizations :advanced
                          :pretty-print false
-                         :preamble ["react/react.min.js"]
-                         :externs ["react/externs/react.js"]}}]}
+                         :preamble [""]
+                         :externs [""]}}]}
   :figwheel {
              :http-server-root "public" ;; default and assumes "resources" 
              :server-port 3449 ;; default
