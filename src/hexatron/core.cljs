@@ -17,22 +17,12 @@
   (tile/create scene [2 0 0])  
   (tile/create scene)))
 
-; whenever setup happens run the 
-(defn setup []
-  ; (println "(setup)")
-  )
-
-(defn teardown []
-  ; (println "(teardown)")
-  )
-
 (fw/start {
   :on-jsload (fn []
     ;; (stop-and-start-my app)
     ; (println "js-reload")
-    ()
-    (teardown)
-    (setup)
+    ; (teardown)
+    ; (setup)
     )
   }          
 )
