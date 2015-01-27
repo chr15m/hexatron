@@ -16,13 +16,13 @@
     (recur (raf/now)))))
 
 (defn init []
-  (println (if (js/webglAvailable) "Using WebGL renderer." "Using 2d canvas renderer."))
+  (println (if (.-webgl js/Detector) "Using WebGL renderer." "Using 2d canvas renderer."))
   
   (let [
     width (.-innerWidth js/window)
     height (.-innerHeight js/window)
   
-    engine (if (js/webglAvailable) (js/THREE.WebGLRenderer. {:alpha true :antialias true}) (js/THREE.CanvasRenderer.))
+    engine (if (.-webgl js/Detector) (js/THREE.WebGLRenderer. {:alpha true :antialias true}) (js/THREE.CanvasRenderer.))
     scene (js/THREE.Scene.)
     camera (js/THREE.PerspectiveCamera. 75 (/ width height) 0.1 1000)
     directional-light (js/THREE.DirectionalLight. 0xffffff 1)
