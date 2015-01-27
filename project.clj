@@ -1,6 +1,6 @@
-(defproject figwheel-test "0.1.0-SNAPSHOT"
-  :description "Playing with Clojurescript and Three.js with figwheel in between"
-  :url "https://github.com/chr15m/clojurescript-threejs-playground"
+(defproject hexatron "0.1.0-SNAPSHOT"
+  :description "Roguelike rendered minimally in three dimensions."
+  :url "https://github.com/chr15m/hexatron"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
@@ -13,6 +13,8 @@
             [lein-figwheel "0.2.2-SNAPSHOT"]]
 
   :source-paths ["src"]
+  
+  :clean-targets ^{:protect false} ["resources/public/js/compiled/"]
   
   :cljsbuild {
     :builds [{:id "dev"
