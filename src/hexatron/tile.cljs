@@ -9,6 +9,8 @@
     ; (set! (.-y (.-rotation mesh)) (.sin js/Math (/ t 807)))
     ;(set! (.-y (.-rotation mesh)) 0)
     ;(set! (.-y (.-position mesh)) (* 0.2 (.sin js/Math (/ t 143))))
+    ; lol wave board
+    ;(set! (.-y (.-position mesh)) (* 0.2 (.sin js/Math (/ (+ t (*  (js/Math.sqrt (+ (js/Math.pow (.-x (.-position mesh)) 2) (js/Math.pow (.-z (.-position mesh)) 2))) 100)) 243))))
     ;(set! (.-x (.-position mesh)) (* 0.2 (.sin js/Math (/ t 140))))
   )
 

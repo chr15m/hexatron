@@ -34,7 +34,7 @@
     ]
 
       (.setSize engine width height)
-      (.position.set camera 3 3 3)
+      (.position.set camera 5 5 5)
       (.lookAt camera (.-position scene))
       
       (set! (.-damping controls) 0.2)

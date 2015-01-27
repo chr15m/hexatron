@@ -13,9 +13,12 @@
 
 (defonce launch (let [[engine scene camera controls] (renderer/init)]
   (renderer/start-loop engine scene camera controls)
-  (tile/create scene [1 0 1])  
-  (tile/create scene [2 0 0])  
-  (tile/create scene)))
+  (let [map-generator (js/ROT.Map.Rogue. 50 50)]
+    (.create map-generator
+      (fn [x y tile]
+        (when (= tile 0) (tile/create scene [(- x (/ (.-_width map-generator) 2)) 0 (- y (/ (.-_height map-generator) 2))]))
+  )))))
+  
 
 (fw/start {
   :on-jsload (fn []
