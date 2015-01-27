@@ -1,8 +1,6 @@
-I am probably doing this horrendously wrong.
-
 # Run #
 
-	lein figwheel
+	rlwrap lein figwheel
 
 Then visit <http://localhost:3449/>
 
