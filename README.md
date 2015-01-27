@@ -1,3 +1,5 @@
+![Screen shot of the current prototype](./screenshot.png)
+
 # Run #
 
 	rlwrap lein figwheel
