@@ -7,12 +7,13 @@
 
 (enable-console-print!)
 
-(defn start-loop [engine scene camera controls]
+(defn start-loop [engine scene camera stats]
   (println "Starting three.js renderer.")
   (go
     (loop [t 0]
     (<! (raf/next-frame))
     (.render engine scene camera)
+    (.update stats)
     ; (.update controls)
     (recur (raf/now)))))
 
@@ -23,7 +24,7 @@
     width (.-innerWidth js/window)
     height (.-innerHeight js/window)
   
-    engine (if (.-webgl js/Detector) (js/THREE.WebGLRenderer. {:alpha true :antialias true}) (js/THREE.CanvasRenderer.))
+    engine (if (.-webgl js/Detector) (js/THREE.WebGLRenderer. (clj->js {:alpha true :antialias true})) (js/THREE.CanvasRenderer.))
     scene (js/THREE.Scene.)
     camera (js/THREE.PerspectiveCamera. 90 (/ width height) 0.1 1000)
     directional-light (js/THREE.DirectionalLight. 0xffffff 1)
@@ -31,7 +32,10 @@
     ambient-light (js/THREE.AmbientLight. 0x222222)
     controls (js/THREE.OrbitControls. camera)
     fog (js/THREE.FogExp2. 0x555555 0.002)
+    stats (js/Stats.)
     ]
+
+      (println "Setting up scene, render engine, camera.")
 
       (.setSize engine width height)
       (.position.set camera 5 5 5)
@@ -46,8 +50,11 @@
       (.add scene directional-light)
       (.add scene ambient-light)
     
-      (println "Setting up scene, render engine, camera.")
+      (set! (.-position (.-style (.-domElement stats))) "absolute")
+      (set! (.-top (.-style (.-domElement stats))) "0px")
+      
+      (.appendChild js/document.body (.-domElement stats))
       (.appendChild js/document.body (.-domElement engine))
-      [engine scene camera controls]
+      [engine scene camera stats]
     )
 )

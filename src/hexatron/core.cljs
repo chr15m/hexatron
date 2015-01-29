@@ -14,9 +14,9 @@
 ;; (def game-state (atom (:entities [])))
 
 (defonce launch (let [
-    [engine scene camera controls] (renderer/init)
+    [engine scene camera stats] (renderer/init)
     ]
-  (renderer/start-loop engine scene camera controls)
+  (renderer/start-loop engine scene camera stats)
   (ui/set-text "major-info" "hexatron")
   (game-map/generate scene 50 50)
   ))
