@@ -20,7 +20,7 @@
   (let [map-generator (js/ROT.Map.Rogue. 50 50)]
     (.create map-generator
       (fn [x y tile]
-        (when (= tile 0) (tile/create scene [(- x (/ (.-_width map-generator) 2)) 0 (- y (/ (.-_height map-generator) 2))]))
+        (when (= tile 0) (tile/create scene :pos [(- x (/ (.-_width map-generator) 2)) 0 (- y (/ (.-_height map-generator) 2))]))
   )))))
 
 (fw/start {
