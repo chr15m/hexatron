@@ -3,6 +3,7 @@
     [figwheel.client :as fw]
     [hexatron.tile :as tile]
     [hexatron.ui :as ui]
+    [hexatron.game-map :as game-map]
     [hexatron.renderer :as renderer]
     [cljs.core.async :refer [put! chan <! >! alts! timeout close!]]
   )(:require-macros [cljs.core.async.macros :refer [go]]))
@@ -17,11 +18,8 @@
     ]
   (renderer/start-loop engine scene camera controls)
   (ui/set-text "major-info" "hexatron")
-  (let [map-generator (js/ROT.Map.Rogue. 50 50)]
-    (.create map-generator
-      (fn [x y tile]
-        (when (= tile 0) (tile/create scene :pos [(- x (/ (.-_width map-generator) 2)) 0 (- y (/ (.-_height map-generator) 2))]))
-  )))))
+  (game-map/generate scene 50 50)
+  ))
 
 (fw/start {
   :on-jsload (fn []
