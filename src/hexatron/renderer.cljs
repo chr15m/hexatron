@@ -56,7 +56,7 @@
         :scene scene
         :camera camera
         :stats stats
-        :animate render-loop
+        :animate (fn [] render-loop)
         }
     )
 )

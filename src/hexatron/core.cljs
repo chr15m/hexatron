@@ -17,8 +17,7 @@
 (defn render-loop [entities]
   (go (loop [t 0]
       (let [t (<! (raf/next-frame))]
-        (dorun (map (fn [e] ((:animate e) e t)) entities))
-        )
+        (dorun (map (fn [e] (((:animate e)) e t)) entities)))
       (recur (raf/now))
       ))
   )

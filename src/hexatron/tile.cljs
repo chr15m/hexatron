@@ -39,7 +39,7 @@
               :geometry geometry
               :material material
               :pos pos
-              :animate animate}
+              :animate (fn [] animate)}
       ]
       (init tile)
       (.add scene mesh)
