@@ -7,15 +7,10 @@
 
 (enable-console-print!)
 
-(defn start-loop [engine]
-  (println "Starting three.js renderer.")
-  (go
-    (loop [t 0]
-    (<! (raf/next-frame))
+(defn render-loop [engine t]
     (.render (:renderer engine) (:scene engine) (:camera engine))
     (.update (:stats engine))
-    ; (.update controls)
-    (recur (raf/now)))))
+  )
 
 (defn init []
   (println (if (.-webgl js/Detector) "Using WebGL renderer." "Using 2d canvas renderer."))
@@ -56,6 +51,12 @@
       (.appendChild js/document.body (.-domElement stats))
       (.appendChild js/document.body (.-domElement three-renderer))
 
-      {:renderer three-renderer :scene scene :camera camera :stats stats}
+      {
+        :renderer three-renderer
+        :scene scene
+        :camera camera
+        :stats stats
+        :animate render-loop
+        }
     )
 )

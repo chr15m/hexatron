@@ -21,7 +21,7 @@
         pos (:pos tile)
         [x y z] pos
         ]
-    (println "Creating tile at" [x y z] "and adding it to the scene.") 
+    ; (println "Creating tile at" [x y z] "and adding it to the scene.") 
     (set! (.-x (.-position mesh)) x)
     (set! (.-y (.-position mesh)) y)
     (set! (.-z (.-position mesh)) z)
@@ -34,7 +34,12 @@
         geometry (js/THREE.BoxGeometry. 1 0.1 1)
         material (js/THREE.MeshLambertMaterial. (clj->js {:ambient 0xffffff :color 0x00ff00 :shading js/THREE.FlatShading}))
         mesh (js/THREE.Mesh. geometry material)
-        tile {:mesh mesh :geometry geometry :material material :pos pos}
+        tile {
+              :mesh mesh
+              :geometry geometry
+              :material material
+              :pos pos
+              :animate animate}
       ]
       (init tile)
       (.add scene mesh)

@@ -14,19 +14,22 @@
 ;; define your app data so that it doesn't get over-written on reload
 ;; (def game-state (atom (:entities [])))
 
+(defn render-loop [entities]
+  (go (loop [t 0]
+      (let [t (<! (raf/next-frame))]
+        (dorun (map (fn [e] ((:animate e) e t)) entities))
+        )
+      (recur (raf/now))
+      ))
+  )
+
 (defonce launch (let [
     engine (renderer/init)
+    tiles (game-map/generate (:scene engine) 50 50)
+    entities (concat [engine] tiles)
     ]
-  (renderer/start-loop engine)
   (ui/set-text "major-info" "hexatron")
-  (let [tiles (game-map/generate (:scene engine) 50 50)]
-    (println "tiles" (count tiles))
-    (go (loop [t 0]
-        (let [t (<! (raf/next-frame))]
-          (dorun (map (fn [tile] (tile/animate tile t)) tiles))
-          )
-        (recur (raf/now))
-        )))
+  (render-loop entities)
   ))
 
 (fw/start {
