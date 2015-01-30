@@ -14,11 +14,11 @@
 ;; (def game-state (atom (:entities [])))
 
 (defonce launch (let [
-    [engine scene camera stats] (renderer/init)
+    engine (renderer/init)
     ]
-  (renderer/start-loop engine scene camera stats)
+  (renderer/start-loop engine)
   (ui/set-text "major-info" "hexatron")
-  (game-map/generate scene 50 50)
+  (game-map/generate (:scene engine) 50 50)
   ))
 
 (fw/start {

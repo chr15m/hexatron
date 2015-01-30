@@ -7,13 +7,13 @@
 
 (enable-console-print!)
 
-(defn start-loop [engine scene camera stats]
+(defn start-loop [engine]
   (println "Starting three.js renderer.")
   (go
     (loop [t 0]
     (<! (raf/next-frame))
-    (.render engine scene camera)
-    (.update stats)
+    (.render (:renderer engine) (:scene engine) (:camera engine))
+    (.update (:stats engine))
     ; (.update controls)
     (recur (raf/now)))))
 
@@ -24,7 +24,7 @@
     width (.-innerWidth js/window)
     height (.-innerHeight js/window)
   
-    engine (if (.-webgl js/Detector) (js/THREE.WebGLRenderer. (clj->js {:alpha true :antialias true})) (js/THREE.CanvasRenderer.))
+    three-renderer (if (.-webgl js/Detector) (js/THREE.WebGLRenderer. (clj->js {:alpha true :antialias true})) (js/THREE.CanvasRenderer.))
     scene (js/THREE.Scene.)
     camera (js/THREE.PerspectiveCamera. 90 (/ width height) 0.1 1000)
     directional-light (js/THREE.DirectionalLight. 0xffffff 1)
@@ -37,13 +37,13 @@
 
       (println "Setting up scene, render engine, camera.")
 
-      (.setSize engine width height)
+      (.setSize three-renderer width height)
       (.position.set camera 5 5 5)
       (.lookAt camera (.-position scene))
       
       (set! (.-damping controls) 0.2)
       (set! (.-fog scene) fog)
-      (.setClearColor engine (.-color (.-fog scene)))
+      (.setClearColor three-renderer (.-color (.-fog scene)))
       (.normalize (.set (.-position directional-light) 0.5 1 1.5))
       (.normalize (.set (.-position directional-back-light) -0.5 -1 -1.5))
       (.add scene directional-back-light)
@@ -54,7 +54,8 @@
       (set! (.-top (.-style (.-domElement stats))) "0px")
       
       (.appendChild js/document.body (.-domElement stats))
-      (.appendChild js/document.body (.-domElement engine))
-      [engine scene camera stats]
+      (.appendChild js/document.body (.-domElement three-renderer))
+
+      {:renderer three-renderer :scene scene :camera camera :stats stats}
     )
 )
