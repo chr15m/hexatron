@@ -3,6 +3,7 @@
     [figwheel.client :as fw]
     [hexatron.tile :as tile]
     [hexatron.ui :as ui]
+    [hexatron.raf :as raf]
     [hexatron.game-map :as game-map]
     [hexatron.renderer :as renderer]
     [cljs.core.async :refer [put! chan <! >! alts! timeout close!]]
@@ -18,7 +19,14 @@
     ]
   (renderer/start-loop engine)
   (ui/set-text "major-info" "hexatron")
-  (game-map/generate (:scene engine) 50 50)
+  (let [tiles (game-map/generate (:scene engine) 50 50)]
+    (println "tiles" (count tiles))
+    (go (loop [t 0]
+        (let [t (<! (raf/next-frame))]
+          (dorun (map (fn [tile] (tile/animate tile t)) tiles))
+          )
+        (recur (raf/now))
+        )))
   ))
 
 (fw/start {

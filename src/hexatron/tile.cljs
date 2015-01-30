@@ -38,10 +38,5 @@
       ]
       (init tile)
       (.add scene mesh)
-      (go (loop [t 0]
-        (let [t (<! (raf/next-frame))]
-          (animate tile t)
-          )
-        (recur (raf/now))
-        ))
+      tile
       ))
