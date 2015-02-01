@@ -4,6 +4,7 @@
     [hexatron.tile :as tile]
     [hexatron.ui :as ui]
     [hexatron.raf :as raf]
+    [hexatron.rng :as rng]
     [hexatron.game-map :as game-map]
     [hexatron.renderer :as renderer]
     [cljs.core.async :refer [put! chan <! >! alts! timeout close!]]
@@ -23,6 +24,7 @@
   )
 
 (defonce launch (let [
+    quest-seed (rng/init)
     engine (renderer/init)
     tiles (game-map/generate (:scene engine) 50 50)
     entities (concat [engine] tiles)
