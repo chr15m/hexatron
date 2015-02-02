@@ -1,7 +1,6 @@
 (ns hexatron.renderer
   (:require
     [figwheel.client :as fw]
-    [hexatron.raf :as raf]
     [cljs.core.async :refer [put! chan <! >! alts! timeout close!]]
   )(:require-macros [cljs.core.async.macros :refer [go]]))
 

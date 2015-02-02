@@ -3,9 +3,9 @@
     [figwheel.client :as fw]
     [hexatron.tile :as tile]
     [hexatron.ui :as ui]
-    [hexatron.raf :as raf]
+    [hexatron.events :as events]
     [hexatron.rng :as rng]
-    [hexatron.game-map :as game-map]
+    [hexatron.mapper :as mapper]
     [hexatron.renderer :as renderer]
     [cljs.core.async :refer [put! chan <! >! alts! timeout close!]]
   )(:require-macros [cljs.core.async.macros :refer [go]]))
@@ -17,16 +17,16 @@
 
 (defn render-loop [entities]
   (go (loop [t 0]
-      (let [t (<! (raf/next-frame))]
+      (let [t (<! (events/next-frame))]
         (dorun (map (fn [e] (((:animate e)) e t)) entities)))
-      (recur (raf/now))
+      (recur (events/now))
       ))
   )
 
 (defonce launch (let [
     quest-seed (rng/init)
     engine (renderer/init)
-    tiles (game-map/generate (:scene engine) 50 50)
+    tiles (mapper/generate (:scene engine) 50 50)
     entities (concat [engine] tiles)
     ]
   (ui/set-text "major-info" "hexatron")

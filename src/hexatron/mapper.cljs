@@ -1,4 +1,4 @@
-(ns hexatron.game-map
+(ns hexatron.mapper
   (:require
     [hexatron.tile :as tile]
     )

@@ -1,4 +1,4 @@
-(ns hexatron.raf
+(ns hexatron.events
   (:require
     [cljs.core.async :refer [put! chan <! >! alts! timeout close!]]
   )(:require-macros [cljs.core.async.macros :refer [go]]))
