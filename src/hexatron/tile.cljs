@@ -25,6 +25,28 @@
     (set! (.-y (.-position mesh)) y)
     (set! (.-z (.-position mesh)) z)
     ; (set! (.-y (.-scale mesh)) 0.1)
+    ; reference back from the mesh to the clojure object so we can grab it
+    (set! (.-cljo mesh) tile)
+    )
+  (event-listener tile)
+  )
+
+(defn pick [tile]
+    (.setHex (.-color (:material tile)) 0x880000)
+  )
+
+(defn unpick [tile]
+    (.setHex (.-color (:material tile)) 0x00ff00)
+  )
+
+(defn event-listener [tile]
+  (go (loop []
+    (let [ev (<! (:channel tile))]
+      ; (println "EVENT!" ev)
+      (when (= ev "picked") (pick tile))
+      (when (= ev "unpicked") (unpick tile))
+      (recur)
+      ))
     )
   )
 
@@ -38,7 +60,11 @@
               :geometry geometry
               :material material
               :pos pos
-              :animate (fn [] animate)}
+              :channel (chan)
+              :animate (fn [] animate)
+              :pick pick
+              :unpick unpick
+              }
       ]
       (init tile)
       (.add scene mesh)

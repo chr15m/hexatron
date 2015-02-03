@@ -31,6 +31,7 @@
     ]
   (ui/set-text "major-info" "hexatron")
   (render-loop entities)
+  (events/set-picker-listener engine tiles (fn []))
   ))
 
 (fw/start {
