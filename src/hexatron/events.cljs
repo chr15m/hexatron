@@ -20,7 +20,7 @@
     c))
 
 ; http://threejs.org/examples/canvas_interactive_cubes.html
-(defn set-picker-listener [engine interactive-entities listener]
+(defn entity-picker [engine interactive-entities]
   (let [
     raycaster (js/THREE.Raycaster.)
     mouse (js/THREE.Vector2.)
@@ -28,6 +28,7 @@
     camera (:camera engine)
     entities (clj->js (map (fn [t] (set! (.-cljo (:mesh t)) t) (:mesh t)) interactive-entities))
     mouse-move-chan (mouse-move)
+    c (chan)
         ]
     (go (loop [old-intersected-objects []]
         (let [[x y] (<! mouse-move-chan)]
@@ -39,8 +40,10 @@
                 ]
             (dorun (map (fn [o] ((:unpick o) o)) old-intersected-objects))
             (dorun (map (fn [o] ((:pick o) o)) intersected-objects))
+            (put! c [intersected-objects old-intersected-objects])
             (recur intersected-objects)
           ))
         ))
+    c
     )
   )

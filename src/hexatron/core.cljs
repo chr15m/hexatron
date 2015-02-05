@@ -31,7 +31,13 @@
     ]
   (ui/set-text "major-info" "hexatron")
   (render-loop entities)
-  (events/set-picker-listener engine tiles (fn []))
+  (let [picker-chan (events/entity-picker engine tiles)]
+    (go (loop []
+      (let [[intersected old-intersected] (<! picker-chan)]
+        ; do something interesting with intersected objects here - path find
+        (println intersected)
+        )
+      (recur))))
   ))
 
 (fw/start {
