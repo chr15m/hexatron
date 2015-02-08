@@ -62,7 +62,7 @@
               :material material
               :pos pos
               :channel (chan)
-              :animate (fn [] animate)
+              ; :animate (fn [] animate)
               :pick pick
               :unpick unpick
               }

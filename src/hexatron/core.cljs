@@ -17,12 +17,12 @@
 ;; (def game-state (atom (:entities [])))
 
 (defn render-loop [entities]
-  (go (loop [t 0]
-      (let [t (<! (events/next-frame))]
-        (dorun (map (fn [e] (((:animate e)) e t)) entities)))
-      (recur (events/now))
-      ))
-  )
+  (let [animators (filter (fn [e] (:animate e)) entities)]
+    (go (loop [t 0]
+        (let [t (<! (events/next-frame))]
+          (dorun (map (fn [e] (((:animate e)) e t)) animators)))
+        (recur (events/now))
+        ))))
 
 (defonce launch (let [
     quest-seed (rng/init)
