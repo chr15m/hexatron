@@ -25,7 +25,7 @@
     directional-back-light (js/THREE.DirectionalLight. 0x222200)
     ambient-light (js/THREE.AmbientLight. 0x222222)
     controls (js/THREE.OrbitControls. camera)
-    fog (js/THREE.FogExp2. 0x555555 0.002)
+    fog (js/THREE.FogExp2. 0x444444 0.005)
     stats (js/Stats.)
     ]
 

@@ -1,5 +1,6 @@
 (ns hexatron.tile
   (:require
+    [hexatron.colorscheme :as colors]
     [cljs.core.async :refer [put! chan <! >! alts! timeout close!]]
   )(:require-macros [cljs.core.async.macros :refer [go]]))
 
@@ -10,7 +11,7 @@
     ;(set! (.-y (.-rotation mesh)) 0)
     ;(set! (.-y (.-position mesh)) (* 0.2 (.sin js/Math (/ t 143))))
     ; lol wave board
-    (set! (.-y (.-position mesh)) (* 0.2 (.sin js/Math (/ (+ t (*  (js/Math.sqrt (+ (js/Math.pow (.-x (.-position mesh)) 2) (js/Math.pow (.-z (.-position mesh)) 2))) 100)) 243))))
+    ; (set! (.-y (.-position mesh)) (* 0.2 (.sin js/Math (/ (+ t (*  (js/Math.sqrt (+ (js/Math.pow (.-x (.-position mesh)) 2) (js/Math.pow (.-z (.-position mesh)) 2))) 100)) 243))))
     ;(set! (.-x (.-position mesh)) (* 0.2 (.sin js/Math (/ t 140))))
     )
   )
@@ -32,11 +33,11 @@
   )
 
 (defn pick [tile]
-    (.setHex (.-color (:material tile)) 0x880000)
+    (.setHex (.-color (:material tile)) (:pink colors/scheme))
   )
 
 (defn unpick [tile]
-    (.setHex (.-color (:material tile)) 0x00ff00)
+    (.setHex (.-color (:material tile)) (:grey-4-bright colors/scheme))
   )
 
 (defn event-listener [tile]
@@ -53,7 +54,7 @@
 (defn create [scene & {:keys [pos] :or {pos [0 0 0]}}] 
       (let [
         geometry (js/THREE.BoxGeometry. 1 0.1 1)
-        material (js/THREE.MeshLambertMaterial. (clj->js {:ambient 0xffffff :color 0x00ff00 :shading js/THREE.FlatShading}))
+        material (js/THREE.MeshLambertMaterial. (clj->js {:ambient 0xffffff :color (:grey-4-bright colors/scheme) :shading js/THREE.FlatShading}))
         mesh (js/THREE.Mesh. geometry material)
         tile {
               :mesh mesh
