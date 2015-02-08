@@ -22,7 +22,7 @@
     scene (js/THREE.Scene.)
     camera (js/THREE.PerspectiveCamera. 90 (/ width height) 0.1 1000)
     directional-light (js/THREE.DirectionalLight. 0xffffff 1)
-    directional-back-light (js/THREE.DirectionalLight. 0x222200)
+    directional-back-light (js/THREE.DirectionalLight. 0x222228)
     ambient-light (js/THREE.AmbientLight. 0x222222)
     controls (js/THREE.OrbitControls. camera)
     fog (js/THREE.FogExp2. 0x444444 0.005)
