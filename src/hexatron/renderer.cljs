@@ -1,5 +1,6 @@
 (ns hexatron.renderer
   (:require
+    [hexatron.colorscheme :as color]
     [figwheel.client :as fw]
     [cljs.core.async :refer [put! chan <! >! alts! timeout close!]]
   )(:require-macros [cljs.core.async.macros :refer [go]]))
@@ -25,12 +26,12 @@
     directional-back-light (js/THREE.DirectionalLight. 0x222228)
     ambient-light (js/THREE.AmbientLight. 0x222222)
     controls (js/THREE.OrbitControls. camera)
-    fog (js/THREE.FogExp2. 0x444444 0.005)
+    fog (js/THREE.FogExp2. (:black color/scheme) 0.005)
     stats (js/Stats.)
     ]
 
       (println "Setting up scene, render engine, camera.")
-
+      
       (.setSize three-renderer width height)
       (.position.set camera 5 5 5)
       (.lookAt camera (.-position scene))
