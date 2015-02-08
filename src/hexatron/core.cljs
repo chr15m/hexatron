@@ -2,6 +2,7 @@
   (:require
     [figwheel.client :as fw]
     [hexatron.tile :as tile]
+    [hexatron.player :as player]
     [hexatron.ui :as ui]
     [hexatron.events :as events]
     [hexatron.rng :as rng]
@@ -27,7 +28,8 @@
     quest-seed (rng/init)
     engine (renderer/init)
     tiles (mapper/generate (:scene engine) 50 50)
-    entities (concat [engine] tiles)
+    player (player/create (:scene engine) :pos (:pos (nth tiles 27)))
+    entities (concat [engine player] tiles)
     ]
   (ui/set-text "major-info" "hexatron")
   (render-loop entities)
