@@ -27,7 +27,7 @@
                          :cache-analysis true }}
              {:id "min"
               :source-paths ["src"]
-              :compiler {:output-to "resources/public/hexatron.min.js"
+              :compiler {:output-to "static-build/hexatron.min.js"
                          :optimizations :advanced
                          :pretty-print false}}]}
 
