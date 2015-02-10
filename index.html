@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="fonts/m51.css" rel="stylesheet" type="text/css">
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script>
+	    $(function() {
+		    $("#play").on("click", function(ev) {
+			    window.open("static-build", "", "width=925,height=500");
+			    ev.preventDefault();
+		    });
+	    });
+    </script>
+  </head>
+  <body>
+    <div id="major-info">Hexatron</div>
+    <a href='#play' id='play'>Play &gt;&gt;</a>
+  </body>
+</html>
