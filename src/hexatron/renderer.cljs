@@ -11,6 +11,7 @@
 (defn render-loop [engine t]
     (.render (:composer engine))
     (.update (:stats engine))
+    (set! (.-value (:screen-shader-time engine)) (+ (.-value (:screen-shader-time engine)) 1.0)) 
   )
 
 (defn init []
@@ -56,19 +57,20 @@
       (let [
         composer (js/THREE.EffectComposer. three-renderer)
         render-pass (js/THREE.RenderPass. scene camera)
-        hblur-shader (js/THREE.ShaderPass. shadertv/shader)
+        screen-shader (js/THREE.ShaderPass. shadertv/shader)
         ]
         
         (.addPass composer render-pass)
-        (.addPass composer hblur-shader)
-        (set! (.-renderToScreen hblur-shader) true)
-
+        (.addPass composer screen-shader)
+        (set! (.-renderToScreen screen-shader) true)
+        
         {
           :renderer three-renderer
           :composer composer
           :scene scene
           :camera camera
           :stats stats
+          :screen-shader-time (.-time (.-uniforms screen-shader))
           :animate (fn [] render-loop)
           }
         
