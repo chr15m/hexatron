@@ -1,6 +1,7 @@
 (ns hexatron.renderer
   (:require
     [hexatron.colorscheme :as color]
+    [hexatron.shadertv :as shadertv]
     [figwheel.client :as fw]
     [cljs.core.async :refer [put! chan <! >! alts! timeout close!]]
   )(:require-macros [cljs.core.async.macros :refer [go]]))
@@ -8,7 +9,7 @@
 (enable-console-print!)
 
 (defn render-loop [engine t]
-    (.render (:renderer engine) (:scene engine) (:camera engine))
+    (.render (:composer engine))
     (.update (:stats engine))
   )
 
@@ -18,7 +19,7 @@
   (let [
     width (.-innerWidth js/window)
     height (.-innerHeight js/window)
-  
+    
     three-renderer (if (.-webgl js/Detector) (js/THREE.WebGLRenderer. (clj->js {:alpha true :antialias true})) (js/THREE.CanvasRenderer.))
     scene (js/THREE.Scene.)
     camera (js/THREE.PerspectiveCamera. 90 (/ width height) 0.1 1000)
@@ -50,13 +51,27 @@
       
       (.appendChild js/document.body (.-domElement stats))
       (.appendChild js/document.body (.-domElement three-renderer))
+      
 
-      {
-        :renderer three-renderer
-        :scene scene
-        :camera camera
-        :stats stats
-        :animate (fn [] render-loop)
-        }
+      (let [
+        composer (js/THREE.EffectComposer. three-renderer)
+        render-pass (js/THREE.RenderPass. scene camera)
+        hblur-shader (js/THREE.ShaderPass. shadertv/shader)
+        ]
+        
+        (.addPass composer render-pass)
+        (.addPass composer hblur-shader)
+        (set! (.-renderToScreen hblur-shader) true)
+
+        {
+          :renderer three-renderer
+          :composer composer
+          :scene scene
+          :camera camera
+          :stats stats
+          :animate (fn [] render-loop)
+          }
+        
+        )
     )
 )
