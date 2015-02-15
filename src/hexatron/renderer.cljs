@@ -53,19 +53,19 @@
       (.appendChild js/document.body (.-domElement stats))
       (.appendChild js/document.body (.-domElement three-renderer))
       
+      (set! (.-autoClear three-renderer) false) 
 
       (let [
         composer (js/THREE.EffectComposer. three-renderer)
         render-pass (js/THREE.RenderPass. scene camera)
         screen-shader (js/THREE.ShaderPass. shaders/tv)
-        bloom-shader (js/THREE.BloomPass. 3 25 5 256)
+        bloom-shader (js/THREE.BloomPass. 0.75)
         copy-shader (js/THREE.ShaderPass. js/THREE.CopyShader)
         ]
         
         (.addPass composer render-pass)
+        (set! (.-renderToScreen render-pass) true)
         (.addPass composer bloom-shader)
-        (.addPass composer copy-shader)
-        ; (set! (.-renderToScreen copy-shader) true)
         (.addPass composer screen-shader)
         (set! (.-renderToScreen screen-shader) true)
         
