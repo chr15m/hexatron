@@ -14,6 +14,8 @@
     ; (set! (.-y (.-rotation mesh)) (.sin js/Math (/ t 807)))
     ;(set! (.-y (.-rotation mesh)) 0)
     (set! (.-y (.-position mesh)) (+ (* 0.1 (.sin js/Math (/ t 143))) (+ y 1)))
+    ;(set! (.-x (.-position mesh)) (+ (* 6 (.sin js/Math (/ t 843))) (+ x)))
+    ;(set! (.-z (.-position mesh)) (+ (* 6 (.cos js/Math (/ t 973))) (+ z)))
     )
   )
 
@@ -45,6 +47,7 @@
               :animate (fn [] animate)
               }
       ]
+      (set! (.-castShadow mesh) true)
       (init player)
       (.add scene mesh)
       player

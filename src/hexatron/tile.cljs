@@ -67,6 +67,7 @@
               :unpick unpick
               }
       ]
+      (set! (.-receiveShadow mesh) true)
       (init tile)
       (.add scene mesh)
       tile

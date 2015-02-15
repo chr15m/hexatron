@@ -9,6 +9,7 @@
 (enable-console-print!)
 
 (defn render-loop [engine t]
+    ;(.render (:renderer engine) (:scene engine) (:camera engine))
     (.render (:composer engine))
     (.update (:stats engine))
     (set! (.-value (:screen-shader-time engine)) (+ (.-value (:screen-shader-time engine)) 1.0)) 
@@ -41,8 +42,18 @@
       (set! (.-damping controls) 0.2)
       (set! (.-fog scene) fog)
       (.setClearColor three-renderer (.-color (.-fog scene)))
-      (.normalize (.set (.-position directional-light) 0.5 1 1.5))
+      (.set (.-position directional-light) 25 50 75)
       (.normalize (.set (.-position directional-back-light) -0.5 0.5 -1.5))
+      (set! (.-castShadow directional-light) true)
+      (set! (.-shadowDarkness directional-light) 0.25)
+      ; (set! (.-shadowCameraVisible directional-light) true)
+      (set! (.-shadowCameraFar directional-light) 125)
+      (set! (.-shadowCameraLeft directional-light) -30)
+      (set! (.-shadowCameraRight directional-light) 30)
+      (set! (.-shadowCameraTop directional-light) 30)
+      (set! (.-shadowCameraBottom directional-light) -30)
+      (set! (.-shadowMapWidth directional-light) 2048)
+      (set! (.-shadowMapHeight directional-light) 2048)
       (.add scene directional-back-light)
       (.add scene directional-light)
       (.add scene ambient-light)
@@ -50,10 +61,13 @@
       (set! (.-position (.-style (.-domElement stats))) "absolute")
       (set! (.-top (.-style (.-domElement stats))) "0px")
       
+      (set! (.-autoClear three-renderer) false) 
+      (set! (.-shadowMapEnabled three-renderer) true)
+      ;(set! (.-shadowMapType three-renderer) js/THREE.PCFSoftShadowMap)
+      ; (set! (.-shadowMapSoft three-renderer) true)
+
       (.appendChild js/document.body (.-domElement stats))
       (.appendChild js/document.body (.-domElement three-renderer))
-      
-      (set! (.-autoClear three-renderer) false) 
 
       (let [
         composer (js/THREE.EffectComposer. three-renderer)
@@ -69,6 +83,8 @@
         (.addPass composer screen-shader)
         (set! (.-renderToScreen screen-shader) true)
         
+        ;(.addPass composer copy-shader)
+        ;(set! (.-renderToScreen copy-shader) true)
         {
           :renderer three-renderer
           :composer composer
