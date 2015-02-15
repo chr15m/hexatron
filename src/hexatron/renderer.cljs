@@ -1,7 +1,7 @@
 (ns hexatron.renderer
   (:require
     [hexatron.colorscheme :as color]
-    [hexatron.shadertv :as shadertv]
+    [hexatron.shaders :as shaders]
     [figwheel.client :as fw]
     [cljs.core.async :refer [put! chan <! >! alts! timeout close!]]
   )(:require-macros [cljs.core.async.macros :refer [go]]))
@@ -57,10 +57,15 @@
       (let [
         composer (js/THREE.EffectComposer. three-renderer)
         render-pass (js/THREE.RenderPass. scene camera)
-        screen-shader (js/THREE.ShaderPass. shadertv/shader)
+        screen-shader (js/THREE.ShaderPass. shaders/tv)
+        bloom-shader (js/THREE.BloomPass. 3 25 5 256)
+        copy-shader (js/THREE.ShaderPass. js/THREE.CopyShader)
         ]
         
         (.addPass composer render-pass)
+        (.addPass composer bloom-shader)
+        (.addPass composer copy-shader)
+        ; (set! (.-renderToScreen copy-shader) true)
         (.addPass composer screen-shader)
         (set! (.-renderToScreen screen-shader) true)
         
