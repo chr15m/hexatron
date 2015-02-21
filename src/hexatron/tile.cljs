@@ -16,22 +16,6 @@
     )
   )
 
-(defn init [tile]
-  (let [mesh (:mesh tile)
-        pos (:pos tile)
-        [x y z] pos
-        ]
-    ; (println "Creating tile at" [x y z] "and adding it to the scene.") 
-    (set! (.-x (.-position mesh)) x)
-    (set! (.-y (.-position mesh)) y)
-    (set! (.-z (.-position mesh)) z)
-    ; (set! (.-y (.-scale mesh)) 0.1)
-    ; reference back from the mesh to the clojure object so we can grab it
-    (set! (.-cljo mesh) tile)
-    )
-  (event-listener tile)
-  )
-
 (defn pick [tile]
     (.setHex (.-color (:material tile)) (:pink colors/scheme))
   )
@@ -49,6 +33,22 @@
       (recur)
       ))
     )
+  )
+
+(defn init [tile]
+  (let [mesh (:mesh tile)
+        pos (:pos tile)
+        [x y z] pos
+        ]
+    ; (println "Creating tile at" [x y z] "and adding it to the scene.") 
+    (set! (.-x (.-position mesh)) x)
+    (set! (.-y (.-position mesh)) y)
+    (set! (.-z (.-position mesh)) z)
+    ; (set! (.-y (.-scale mesh)) 0.1)
+    ; reference back from the mesh to the clojure object so we can grab it
+    (set! (.-cljo mesh) tile)
+    )
+  (event-listener tile)
   )
 
 (defn create [scene & {:keys [pos] :or {pos [0 0 0]}}] 
