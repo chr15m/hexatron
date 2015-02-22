@@ -1,9 +1,15 @@
 ![Screen shot of the current prototype](./screenshot.png)
 
-# Run #
+<http://chr15m.github.io/hexatron/>
 
-	rlwrap lein figwheel
+# Hack #
 
-Then visit <http://localhost:3449/>
+This project is built on Clojurescript and Figwheel.
 
-(You need [Leiningen](https://github.com/technomancy/leiningen) to run this.)
+Start the server with:
+
+	lein figwheel
+
+Then visit <http://localhost:3449/>.
+
+You need [Leiningen](https://github.com/technomancy/leiningen) to do that.
