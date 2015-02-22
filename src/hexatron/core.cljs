@@ -1,6 +1,5 @@
 (ns hexatron.core
   (:require
-    [figwheel.client :as fw]
     [hexatron.tile :as tile]
     [hexatron.player :as player]
     [hexatron.ui :as ui]
@@ -42,12 +41,3 @@
       (recur))))
   ))
 
-(fw/start {
-  :on-jsload (fn []
-    ;; (stop-and-start-my app)
-    ; (println "js-reload")
-    ; (teardown)
-    ; (setup)
-    )
-  }          
-)

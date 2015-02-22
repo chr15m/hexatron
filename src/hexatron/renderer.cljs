@@ -2,7 +2,6 @@
   (:require
     [hexatron.colorscheme :as color]
     [hexatron.shaders :as shaders]
-    [figwheel.client :as fw]
     [cljs.core.async :refer [put! chan <! >! alts! timeout close!]]
   )(:require-macros [cljs.core.async.macros :refer [go]]))
 
