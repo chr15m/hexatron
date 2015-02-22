@@ -1,4 +1,4 @@
-(ns store
+(ns hexatron.store
   (:require [cljs.reader :as edn]))
 
 (defn remember! [item-name values]

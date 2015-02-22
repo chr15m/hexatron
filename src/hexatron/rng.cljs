@@ -1,5 +1,5 @@
 (ns hexatron.rng
-  (:require [store :as store]))
+  (:require [hexatron.store :as store]))
 
 (defn seed-from-url []
   (when
