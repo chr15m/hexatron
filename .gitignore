@@ -1,4 +1,4 @@
 .*.swp
 .lein-repl-history
-resources/public/js/compiled
 target
+*.log

@@ -1,0 +1,6 @@
+[submodule "resources/public/lib/threejs"]
+	path = resources/public/lib/threejs
+	url = https://github.com/mrdoob/three.js.git
+[submodule "resources/public/lib/rotjs"]
+	path = resources/public/lib/rotjs
+	url = https://github.com/ondras/rot.js.git

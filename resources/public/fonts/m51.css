@@ -1,0 +1,20 @@
+@font-face {
+    font-family: 'm51'; 
+    src: url('m51.eot');
+    src: url('m51.eot?#iefix') format('embedded-opentype'),
+    url('m51.woff') format('woff'),
+    url('m51.svg#m51') format('svg'); 
+    /* url('m51.ttf') format('truetype'); */
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Corpid_Regular'; 
+    src: url('Corpid_Regular.eot'); 
+    src: url('Corpid_Regular.eot?#iefix') format('embedded-opentype'), 
+    url('Corpid_Regular.woff') format('woff'),
+    url('Corpid_Regular.svg#Corpid_Regular') format('svg'); 
+    font-weight: normal; 
+    font-style: normal; 
+}
