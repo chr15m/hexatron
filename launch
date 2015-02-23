@@ -1,0 +1,3 @@
+#!/bin/bash
+
+chromium-browser http://localhost:3449/ --user-data-dir=./.chromium-hexatron &
