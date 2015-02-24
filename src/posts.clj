@@ -9,15 +9,22 @@
 (defn generate-posts [] 
   ; get the .md files from the posts directory
   (let [posts (filter (fn [f] (.endsWith f ".md")) (.list (io/file "posts")))]
-    (doseq [p posts] 
+    (concat (doseq [p posts] 
       (println p)
-      ; process the filename to extract the post title
       (let [
+            ; process the filename to extract the post title
             title (string/join " " (get (split-at 3 (string/split (get (string/split p #"\.") 0) #"-")) 1))
-            body (md-to-html-string (slurp (str "posts/" p)))]
+            ; get the filename
+            filename (str "posts/" p)
+            ; use markdown to convert to html
+            body (md-to-html-string (slurp filename))
+            ; when the file was last modified
+            touched (.lastModified (java.io.File. filename))
+            ]
+        (println (.format (java.text.SimpleDateFormat. "yyyy-MM-dd") touched))
         (println title)
-        ; use markdown to convert to html
-        (println body)))))
+        (println body)
+        )))))
 
 (defn -main
   [& args]
