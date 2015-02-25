@@ -4,7 +4,10 @@
     [clojure.java.io :as io]
     [clojure.string :as string]
     [markdown.core :refer [md-to-html-string]]
-    ))
+    [net.cgrand.enlive-html :as html]))
+
+(html/deftemplate index-html (java.io.File. "./index.html") []
+  [:.posts] (html/append "Hello"))
 
 (defn generate-posts [] 
   ; get the .md files from the posts directory
@@ -30,5 +33,7 @@
   [& args]
   (println "Generating posts from 'posts' subdirectory.")
   (generate-posts)
+  ;(println (str main-template))
+  (println (apply str (index-html)))
   )
 
