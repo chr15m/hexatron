@@ -8,7 +8,7 @@
     [net.cgrand.enlive-html :as enlive]))
 
 (enlive/deftemplate index-html (java.io.File. "./index.html") [posts]
-  [:.posts] (enlive/html-content (html
+  [:#posts] (enlive/html-content (html
     (for [p posts]
       [:div.post [:h1 (:title p)] [:div (:body p)]]))))
 
