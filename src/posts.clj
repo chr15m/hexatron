@@ -12,8 +12,8 @@
 (defn generate-posts [] 
   ; get the .md files from the posts directory
   (let [posts (filter (fn [f] (.endsWith f ".md")) (.list (io/file "posts")))]
-    (concat (doseq [p posts] 
-      (println p)
+    (for [p posts] 
+      ;(println p)
       (let [
             ; process the filename to extract the post title
             title (string/join " " (get (split-at 3 (string/split (get (string/split p #"\.") 0) #"-")) 1))
@@ -24,15 +24,16 @@
             ; when the file was last modified
             touched (.lastModified (java.io.File. filename))
             ]
-        (println (.format (java.text.SimpleDateFormat. "yyyy-MM-dd") touched))
-        (println title)
-        (println body)
-        )))))
+        ;(println (.format (java.text.SimpleDateFormat. "yyyy-MM-dd") touched))
+        ;(println title)
+        ;(println body)
+        {:title title :body body :touched touched}
+        ))))
 
 (defn -main
   [& args]
   (println "Generating posts from 'posts' subdirectory.")
-  (generate-posts)
+  (println (generate-posts))
   ;(println (str main-template))
   (println (apply str (index-html)))
   )
