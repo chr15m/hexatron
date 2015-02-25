@@ -12,9 +12,12 @@
     (for [p posts]
       [:div.post [:h2.date (.format (java.text.SimpleDateFormat. "yyyy-MM-dd") (:touched p))] [:h1 (:title p)] [:div (:body p)]]))))
 
+(defn list-posts []
+  (reverse (sort (filter (fn [f] (.endsWith f ".md")) (.list (io/file "posts"))))))
+
 (defn generate-posts [] 
   ; get the .md files from the posts directory
-  (let [posts (filter (fn [f] (.endsWith f ".md")) (.list (io/file "posts")))]
+  (let [posts (list-posts)]
     (for [p posts]
       (let [
           ; process the filename to extract the post title
