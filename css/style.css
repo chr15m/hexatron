@@ -36,6 +36,45 @@ a:hover {
 	font-size: 10px;
 }
 
+#posts {
+	margin-top: 4em;
+}
+
 .post {
 	font-family: 'Josefin Sans', sans-serif;
+	font-size: 0.75em;
+	max-width: 800px;
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 2em;
+}
+
+.post p {
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+}
+
+.post img {
+	max-width: 100%;
+	border: 1px solid #333;
+	border-radius: 3px;
+}
+
+.post h1 {
+	font-family: 'Orbitron';
+	font-weight: 700;
+	font-size: 1.1em;
+	margin-bottom: 0.5em;
+	padding-left: 0.25em;
+}
+
+.post .date {
+	font-family: 'Orbitron';
+	font-weight: 700;
+	font-size: 1.1em;
+	float: right;
+	margin-bottom: 0em;
+	margin-top: 0.25em;
+	padding-right: 0.25em;
 }
