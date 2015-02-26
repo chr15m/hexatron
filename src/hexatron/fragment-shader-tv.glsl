@@ -2,8 +2,6 @@
 precision mediump float;
 
 uniform float time;
-uniform vec2 mouse;
-uniform vec2 resolution;
 uniform sampler2D tDiffuse;
 varying vec2 vUv;
 varying vec3 vNormal;

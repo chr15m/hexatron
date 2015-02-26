@@ -44,6 +44,11 @@
             (recur intersected-objects)
           ))
         ))
-    c
-    )
-  )
+    c))
+
+(defn resize []
+  (let [c (chan)]
+    (.addEventListener js/window "resize"
+      (fn [ev]
+        (put! c [(.-innerWidth js/window) (.-innerHeight js/window)])))
+    c))

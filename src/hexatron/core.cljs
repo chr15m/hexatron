@@ -32,12 +32,12 @@
     ]
   (ui/set-text "major-info" "hexatron")
   (render-loop entities)
+  (renderer/resize-watch engine)
   (let [picker-chan (events/entity-picker engine tiles)]
     (go (loop []
       (let [[intersected old-intersected] (<! picker-chan)]
         ; do something interesting with intersected objects here - path find
-        (println intersected)
+        ;(println intersected)
         )
-      (recur))))
-  ))
+      (recur))))))
 

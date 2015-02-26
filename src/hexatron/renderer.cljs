@@ -2,6 +2,7 @@
   (:require
     [hexatron.colorscheme :as color]
     [hexatron.shaders :as shaders]
+    [hexatron.events :as events]
     [cljs.core.async :refer [put! chan <! >! alts! timeout close!]]
   )(:require-macros [cljs.core.async.macros :refer [go]]))
 
@@ -13,6 +14,15 @@
     (.update (:stats engine))
     (set! (.-value (:screen-shader-time engine)) (+ (.-value (:screen-shader-time engine)) 1.0)) 
   )
+
+(defn resize-watch [engine]
+  (let [resize-chan (events/resize)]
+    (go (loop []
+          (let [[w h] (<! resize-chan)]
+            (.setSize (:renderer engine) w h)
+            (set! (.-aspect (:camera engine)) (/ w h))
+            (.updateProjectionMatrix (:camera engine))
+            (recur))))))
 
 (defn init []
   (println (if (.-webgl js/Detector) "Using WebGL renderer." "Using 2d canvas renderer."))
@@ -81,7 +91,7 @@
         (.addPass composer bloom-shader)
         (.addPass composer screen-shader)
         (set! (.-renderToScreen screen-shader) true)
-        
+
         ;(.addPass composer copy-shader)
         ;(set! (.-renderToScreen copy-shader) true)
         {
