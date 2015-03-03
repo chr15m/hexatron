@@ -1,8 +1,8 @@
 (ns hexatron.tile
   (:require
     [hexatron.colorscheme :as colors]
-    [cljs.core.async :refer [put! chan <! >! alts! timeout close!]]
-  )(:require-macros [cljs.core.async.macros :refer [go]]))
+    [cljs.core.async :refer [put! chan <! >! alts! timeout close!]])
+  (:require-macros [cljs.core.async.macros :refer [go]]))
 
 (defn animate [tile t]
   (let [mesh (:mesh tile)]
@@ -17,12 +17,10 @@
   )
 
 (defn pick [tile]
-    (.setHex (.-color (:material tile)) (:pink colors/scheme))
-  )
+    (.setHex (.-color (:material tile)) (:pink colors/scheme)))
 
 (defn unpick [tile]
-    (.setHex (.-color (:material tile)) (:grey-4-bright colors/scheme))
-  )
+    (.setHex (.-color (:material tile)) (:grey-4-bright colors/scheme)))
 
 (defn event-listener [tile]
   (go (loop []
@@ -30,10 +28,7 @@
       ; (println "EVENT!" ev)
       (when (= ev "picked") (pick tile))
       (when (= ev "unpicked") (unpick tile))
-      (recur)
-      ))
-    )
-  )
+      (recur)))))
 
 (defn init [tile]
   (let [mesh (:mesh tile)
@@ -48,8 +43,7 @@
     ; reference back from the mesh to the clojure object so we can grab it
     (set! (.-cljo mesh) tile)
     )
-  (event-listener tile)
-  )
+  (event-listener tile))
 
 (defn create [scene & {:keys [pos] :or {pos [0 0 0]}}] 
       (let [
@@ -70,5 +64,6 @@
       (set! (.-receiveShadow mesh) true)
       (init tile)
       (.add scene mesh)
-      tile
-      ))
+      tile))
+
+
