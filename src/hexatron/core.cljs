@@ -28,7 +28,7 @@
     engine (renderer/init)
     map-generator (mapper/generator 50 50)
     floor-map (mapper/generate map-generator)
-    tiles (for [[x y] floor-map] (tile/create (:scene engine) :pos [(- x (/ (.-_width map-generator) 2)) 0 (- y (/ (.-_height map-generator) 2))]))
+    tiles (tile/create-from-tile-map floor-map (:scene engine) map-generator)
     player (player/create (:scene engine) :pos (:pos (nth tiles 27)))
     entities (concat [engine player] tiles)
     ]
