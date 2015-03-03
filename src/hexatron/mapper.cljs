@@ -1,17 +1,15 @@
 (ns hexatron.mapper
   (:require
-    [hexatron.tile :as tile]
-    )
-  )
+    [hexatron.tile :as tile]))
 
-(defn generate [scene w h]
-  (let [rot-map-generator (js/ROT.Map.Rogue. w h)
-        new-map (clj->js [])
-        ]
+(defn generator [w h]
+  (js/ROT.Map.Rogue. w h))
+
+; generate a map of tile positions
+(defn generate [rot-map-generator]
+  (let [new-map (clj->js [])]
       (.create rot-map-generator
         (fn [x y t]
-          (when (= t 0) (.push new-map (tile/create scene :pos [(- x (/ (.-_width rot-map-generator) 2)) 0 (- y (/ (.-_height rot-map-generator) 2))])))
-        ))
-      (js->clj new-map)
-      ))
+          (when (= t 0) (.push new-map [x y]))))
+      (js->clj new-map)))
 

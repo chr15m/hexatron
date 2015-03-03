@@ -26,7 +26,9 @@
 (defonce launch (let [
     quest-seed (rng/init)
     engine (renderer/init)
-    tiles (mapper/generate (:scene engine) 50 50)
+    map-generator (mapper/generator 50 50)
+    floor-map (mapper/generate map-generator)
+    tiles (for [[x y] floor-map] (tile/create (:scene engine) :pos [(- x (/ (.-_width map-generator) 2)) 0 (- y (/ (.-_height map-generator) 2))]))
     player (player/create (:scene engine) :pos (:pos (nth tiles 27)))
     entities (concat [engine player] tiles)
     ]
@@ -38,6 +40,8 @@
       (let [[intersected old-intersected] (<! picker-chan)]
         ; do something interesting with intersected objects here - path find
         ;(println intersected)
-        )
+        (when (not (= intersected old-intersected))
+          ; (mapper/find-path (:pos (nth intersected 0)))
+          (println intersected)))
       (recur))))))
 
