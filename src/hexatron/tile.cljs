@@ -66,6 +66,6 @@
       (.add scene mesh)
       tile))
 
-(defn create-from-tile-map [floor-map scene map-generator]
-  (for [[x y] floor-map] (create scene :pos [(- x (/ (.-_width map-generator) 2)) 0 (- y (/ (.-_height map-generator) 2))])))
+(defn create-from-tile-map [floor-map scene]
+  (for [[x y] floor-map] (create scene :pos [x 0 y])))
 

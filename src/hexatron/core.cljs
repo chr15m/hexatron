@@ -28,20 +28,22 @@
     engine (renderer/init)
     map-generator (mapper/generator 50 50)
     floor-map (mapper/generate map-generator)
-    tiles (tile/create-from-tile-map floor-map (:scene engine) map-generator)
+    tiles (tile/create-from-tile-map floor-map (:scene engine))
     player (player/create (:scene engine) :pos (:pos (nth tiles 27)))
     entities (concat [engine player] tiles)
     ]
+  (println floor-map)
+  (println (:pos player))
   (ui/set-text "major-info" "hexatron")
   (render-loop entities)
   (renderer/resize-watch engine)
   (let [picker-chan (events/entity-picker engine tiles)]
     (go (loop []
-      (let [[intersected old-intersected] (<! picker-chan)]
+      (let [
+        [intersected old-intersected] (<! picker-chan)
+        player-pos (:pos player)]
         ; do something interesting with intersected objects here - path find
-        ;(println intersected)
-        (when (not (= intersected old-intersected))
-          ; (mapper/find-path (:pos (nth intersected 0)))
-          (println intersected)))
+        (when (and (not (= intersected old-intersected)) (> (count intersected) 0))
+          (mapper/find-path floor-map [(first player-pos) (last player-pos)] (:pos (nth intersected 0)))))
       (recur))))))
 
