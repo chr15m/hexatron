@@ -26,18 +26,13 @@
         xf yf
         ; callback which tells the pathfinder valid points
         (fn [x y]
-          (let [c (count (filter (fn [i] (= i [x y])) map-structure))])
-          (println "path-test" x y c)
-          c)
+           (count (filter (fn [i] (= i [x y])) map-structure)))
         (clj->js {:topology 4}))
       ; to position
       xt yt
       ; callback with points that should go into the path
       (fn [x y]
-        (println "hello" x y)
-        (.push path [x y])
-        )
-    )
-    (println "path" path)
+        (.push path [x y])))
+      (println "path" path)
     path))
 

@@ -34,7 +34,7 @@
     ]
   (println floor-map)
   (println (:pos player))
-  (ui/set-text "major-info" "hexatron")
+  ;(ui/set-text "major-info" "")
   (render-loop entities)
   (renderer/resize-watch engine)
   (let [picker-chan (events/entity-picker engine tiles)]
