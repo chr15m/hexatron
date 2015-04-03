@@ -17,11 +17,12 @@
   (let [
     path (clj->js [])
     [xf yf] from
-    [xt yt] to]
+    [xt zt yt] to]
     ; run the path finding computation
     (.compute
-      ; create a new AStar pathfinding object
-      (ROT.Path.AStar.
+      ; create a new pathfinding object
+      ; ROT.Path.AStar.
+      (ROT.Path.Dijkstra.
         ; from position
         xf yf
         ; callback which tells the pathfinder valid points
@@ -33,6 +34,6 @@
       ; callback with points that should go into the path
       (fn [x y]
         (.push path [x y])))
-      (println "path" path)
+      ;(println "path" path)
     path))
 
